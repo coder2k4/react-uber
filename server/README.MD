@@ -9,3 +9,4 @@ yarn add -D @types/node
 yarn add graphql-yoga
 yarn add helmet morgan cors
 yarn add @types/cors @types/helmet @types/morgan -D
+yarn add graphql-tools merge-graphql-schemas
