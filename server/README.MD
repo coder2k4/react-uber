@@ -10,3 +10,7 @@ yarn add graphql-yoga
 yarn add helmet morgan cors
 yarn add @types/cors @types/helmet @types/morgan -D
 yarn add graphql-tools merge-graphql-schemas
+yarn add graphql-to-typescript gql-merge -D
+yarn add babel-runtime -D
+yarn add typeorm pg 
+yarn add class-validator
