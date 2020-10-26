@@ -1,5 +1,18 @@
-import {BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {
+    BaseEntity,
+    BeforeInsert,
+    BeforeUpdate,
+    Column,
+    CreateDateColumn,
+    Entity,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
 import {IsEmail} from "class-validator"
+import bcrypt from "bcrypt"
+
+
+const BCROUNDS = 10
 
 @Entity()
 class User extends BaseEntity {
@@ -14,35 +27,26 @@ class User extends BaseEntity {
     @Column({type: "boolean", default: false})
     verifiedEmail: boolean
 
-    @Column({type: "string"})
+    @Column({type: "text"})
     firstName: string
 
-    @Column({type: "string"})
+    @Column({type: "text"})
     lastName: string
 
     @Column({type: "int"})
     age: number
 
-    @Column({type: "string"})
+    @Column({type: "text"})
     password: string
 
-    @Column({type: "string"})
+    @Column({type: "text"})
     phoneNumber: string
 
     @Column({type: "boolean", default: false})
     verifiedPhoneNumber: boolean
 
-    @Column({type: "string"})
+    @Column({type: "text"})
     profilePhoto: string
-
-    @CreateDateColumn()
-    createdAt: string
-
-    @CreateDateColumn()
-    updatedAt: string
-
-    @Column({type: "string"})
-    fullName: string
 
     @Column({type: "boolean", default: false})
     isDriving: boolean
@@ -53,14 +57,40 @@ class User extends BaseEntity {
     @Column({type: "boolean", default: false})
     isTaken: boolean
 
-    @Column({type: "float"})
+    @Column({type: "double precision", default: 0})
     lastLng: number
 
-    @Column({type: "float"})
+    @Column({type: "double precision", default: 0})
     lastLat: number
 
-    @Column({type: "float"})
+    @Column({type: "double precision", default: 0})
     lastOrientation: number
+
+    @CreateDateColumn()
+    createdAt: string
+
+    @UpdateDateColumn()
+    updatedAt: string
+
+    get fullName(): string {
+        return `${this.firstName} ${this.lastName}`
+    }    
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    async savePassword(): Promise<void> {
+        if (this.password) {
+            this.password = await this.hashPassword(this.password)
+        }
+    }
+
+    private hashPassword(password: string): Promise<string> {
+        return bcrypt.hash(password,BCROUNDS)
+    }
+
+    public async comparePassword(password: string, hashString: string): Promise<boolean> {
+        return await bcrypt.compare(password, hashString)
+    }
 
 }
 

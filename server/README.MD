@@ -14,3 +14,5 @@ yarn add graphql-to-typescript gql-merge -D
 yarn add babel-runtime -D
 yarn add typeorm pg 
 yarn add class-validator
+yarn add bcrypt
+yarn add -D @types/bcrypt

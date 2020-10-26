@@ -7,7 +7,7 @@ const connectionOptions: ConnectionOptions = {
     database: "uber",
     synchronize: true,
     logging: true,
-    entities: ["entities/**/*.*"],
+    entities: ["src/entities/**/*.*"],
     host: process.env.DB_ENDPOINT || "localhost",
     port: 5432,
     username: process.env.DB_USERNAME || "postgres",
