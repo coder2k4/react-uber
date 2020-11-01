@@ -18,7 +18,7 @@ const appOptions: Options = {
     endpoint: GRAPHQL_ENDPOINT
 }
 
-const handleAppStart = () => console.log("Starting on port http://localhost:" + PORT)
+const handleAppStart = () => console.log("Starting on port http://localhost:" + PORT + PLAYGROUND_ENDPOINT)
 
 createConnection(connectionOptions).then(() => {
     app.start(appOptions, handleAppStart)
